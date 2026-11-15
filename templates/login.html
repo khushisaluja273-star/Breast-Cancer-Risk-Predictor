@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Welcome Back | Breast Cancer Risk Predictor</title><style>
+* { box-sizing: border-box; }
+body { margin:0; min-height:100vh; font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#fff4fc,#f5f7fa); color:#2d3748;
+  display:flex; align-items:center; justify-content:center; padding:24px; }
+.auth-wrap { width:100%; max-width:440px; }
+.brand { text-align:center; color:#8B0075; margin-bottom:22px; }
+.brand .symbol { font-size:2.5rem; }
+.brand h1 { margin:8px 0 5px; font-size:1.65rem; }
+.brand p { color:#718096; margin:0; font-size:.9rem; }
+.auth-card { background:#fff; padding:30px; border-radius:20px;
+  box-shadow:0 12px 38px rgba(90,0,75,.12); }
+.auth-card h2 { margin:0 0 6px; font-size:1.35rem; }
+.sub { color:#718096; margin:0 0 22px; font-size:.9rem; }
+.field { margin-bottom:15px; }
+label { display:block; font-size:.85rem; font-weight:650; margin-bottom:7px; }
+input { width:100%; padding:12px 13px; border:1px solid #d9dce3;
+  border-radius:10px; outline:none; font-size:.95rem; }
+input:focus { border-color:#CC00AA; box-shadow:0 0 0 3px rgba(204,0,170,.1); }
+.btn { width:100%; border:0; border-radius:25px; padding:13px;
+  margin-top:8px; color:#fff; font-weight:700; font-size:.95rem; cursor:pointer;
+  background:linear-gradient(135deg,#CC00AA,#8B0075); }
+.switch { text-align:center; margin:18px 0 0; color:#718096; font-size:.9rem; }
+a { color:#9b0083; font-weight:700; text-decoration:none; }
+.flash { padding:10px 12px; margin-bottom:14px; border-radius:9px; font-size:.88rem; }
+.flash.error { background:#fff0f0; color:#a32222; }
+.flash.success { background:#effaf0; color:#246b2a; }
+.small-note { margin-top:16px; color:#8992a1; font-size:.76rem; line-height:1.45; text-align:center; }
+</style></head>
+<body><main class="auth-wrap">
+<div class="brand"><div class="symbol">🎗️</div><h1>Breast Cancer Risk Predictor</h1><p>A patient-focused educational prediction tool</p></div>
+<section class="auth-card"><h2>Welcome Back</h2><p class="sub">Log in to continue to your patient dashboard.</p>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}{% for category, message in messages %}
+    <div class="flash {{ category }}">{{ message }}</div>
+  {% endfor %}{% endif %}
+{% endwith %}
+<form method="POST"><div class="field"><label for="email">Email Address</label>
+        <input id="email" name="email" type="email" placeholder="you@example.com" required autocomplete="email"></div>
+<div class="field"><label for="password">Password</label>
+        <input id="password" name="password" type="password" placeholder="Enter your password" required autocomplete="current-password"></div><button class="btn" type="submit">Login</button></form>
+<p class="switch">New patient? <a href="{{ url_for('register') }}">Create an account</a></p>
+<div class="small-note">Your password is stored securely as a hash. This project is for educational use only and is not a medical diagnosis.</div>
+</section></main></body></html>
