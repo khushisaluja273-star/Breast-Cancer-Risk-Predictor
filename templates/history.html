@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prediction History</title><style>
+* { box-sizing: border-box; }
+body { margin:0; min-height:100vh; font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#fff4fc,#f5f7fa); color:#2d3748;
+  display:flex; align-items:center; justify-content:center; padding:24px; }
+.auth-wrap { width:100%; max-width:440px; }
+.brand { text-align:center; color:#8B0075; margin-bottom:22px; }
+.brand .symbol { font-size:2.5rem; }
+.brand h1 { margin:8px 0 5px; font-size:1.65rem; }
+.brand p { color:#718096; margin:0; font-size:.9rem; }
+.auth-card { background:#fff; padding:30px; border-radius:20px;
+  box-shadow:0 12px 38px rgba(90,0,75,.12); }
+.auth-card h2 { margin:0 0 6px; font-size:1.35rem; }
+.sub { color:#718096; margin:0 0 22px; font-size:.9rem; }
+.field { margin-bottom:15px; }
+label { display:block; font-size:.85rem; font-weight:650; margin-bottom:7px; }
+input { width:100%; padding:12px 13px; border:1px solid #d9dce3;
+  border-radius:10px; outline:none; font-size:.95rem; }
+input:focus { border-color:#CC00AA; box-shadow:0 0 0 3px rgba(204,0,170,.1); }
+.btn { width:100%; border:0; border-radius:25px; padding:13px;
+  margin-top:8px; color:#fff; font-weight:700; font-size:.95rem; cursor:pointer;
+  background:linear-gradient(135deg,#CC00AA,#8B0075); }
+.switch { text-align:center; margin:18px 0 0; color:#718096; font-size:.9rem; }
+a { color:#9b0083; font-weight:700; text-decoration:none; }
+.flash { padding:10px 12px; margin-bottom:14px; border-radius:9px; font-size:.88rem; }
+.flash.error { background:#fff0f0; color:#a32222; }
+.flash.success { background:#effaf0; color:#246b2a; }
+.small-note { margin-top:16px; color:#8992a1; font-size:.76rem; line-height:1.45; text-align:center; }
+
+body { display:block; padding:28px 16px; }
+.wrap { max-width:900px; margin:0 auto; }
+.top { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:22px; }
+.top h1 { color:#8B0075; margin:0; }
+.top a { margin-left:12px; }
+.table-card { background:#fff; border-radius:16px; padding:22px; box-shadow:0 8px 28px rgba(90,0,75,.09); overflow-x:auto; }
+table { width:100%; border-collapse:collapse; min-width:600px; }
+th,td { text-align:left; padding:13px 11px; border-bottom:1px solid #edf0f4; font-size:.9rem; }
+th { color:#8B0075; background:#fff7fd; }
+.badge { font-weight:700; }
+.benign { color:#27833a; } .malignant { color:#c62828; }
+.empty { text-align:center; color:#718096; padding:28px; }
+</style></head><body><main class="wrap">
+<div class="top"><div><h1>Prediction History</h1><p style="color:#718096;margin:6px 0 0;">{{ patient_name }} · Patient ID: {{ patient_id }}</p></div>
+<div><a href="{{ url_for('index') }}">← Predictor</a><a href="{{ url_for('logout') }}">Logout</a></div></div>
+<section class="table-card">
+{% if records %}<table><thead><tr><th>Date &amp; Time</th><th>Result</th><th>Benign Probability</th><th>Malignant Probability</th></tr></thead><tbody>
+{% for row in records %}<tr><td>{{ row['created_at'] }}</td><td class="badge {{ 'benign' if row['result'] == 'Benign' else 'malignant' }}">{{ row['result'] }}</td><td>{{ row['benign_prob'] }}%</td><td>{{ row['malignant_prob'] }}%</td></tr>{% endfor %}
+</tbody></table>{% else %}<div class="empty">No predictions saved yet. Your future predictions will appear here.</div>{% endif %}
+</section></main></body></html>
